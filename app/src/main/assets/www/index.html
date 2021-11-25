@@ -1,0 +1,48 @@
+<html>
+<head>
+
+    <meta charset="utf8">
+    <script type="text/javascript">
+
+const FastSpeedtest = require("fast-speedtest-api");
+
+let speedtest = new FastSpeedtest({
+    token: "your-app-token", // required
+    verbose: false, // default: false
+    timeout: 10000, // default: 5000
+    https: true, // default: true
+    urlCount: 5, // default: 5
+    bufferSize: 8, // default: 8
+    unit: FastSpeedtest.UNITS.Mbps, // default: Bps
+    proxy: 'http://optional:auth@my-proxy:123' // default: undefined
+});
+
+speedtest.getSpeed().then(s => {
+    console.log(`Speed: ${s} Mbps`);
+}).catch(e => {
+    console.error(e.message);
+});
+
+    </script>
+
+
+</head>
+
+<body>
+
+<input type="button" value="A함수호출" id="A"/>
+<input type="button" value="B함수호출" id="B"/>
+<br>
+<input type="button" value="click_A 함수호출" onclick="click_a()"/>
+<input type="button" value="click_A 함수호출(click했어)" onclick="click_a('click 했어')"/>
+<br>
+<input type="button" value="click_B 함수호출" onclick="click_b()"/>
+<br>
+Android(aos) 호출 관련 (bridge는 aos)
+<br>
+<input type="button" value="aos.click_t 함수호출" onclick="window.aos.click_t()"/> <br>
+<input type="button" value="aos.click_toast 함수호출" onclick="window.aos.click_toast()"/>
+
+</body>
+
+</html>
