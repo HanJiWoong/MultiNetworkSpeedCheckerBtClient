@@ -178,14 +178,23 @@ class MainActivity : AppCompatActivity() {
 
                 val cm: ConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                 val netInfo: NetworkInfo? = cm.getActiveNetworkInfo()
-                //should check null because in airplane mode it will be null
-                //should check null because in airplane mode it will be null
                 val nc: NetworkCapabilities? = cm.getNetworkCapabilities(cm.getActiveNetwork())
                 var downSpeed: Int = nc?.getLinkDownstreamBandwidthKbps() ?: -1;
                 var upSpeed: Int = nc?.getLinkUpstreamBandwidthKbps() ?: -1;
 
+
                 downSpeed = (downSpeed * 0.85).toInt()
                 upSpeed = (upSpeed * 0.75).toInt()
+
+                sendString?.let {
+                    if(it.contains("lte")) {
+                        downSpeed = downSpeed * 3 * 5
+                        upSpeed = upSpeed * 3 * 2
+                    } else if (it.contains("5g")) {
+                        downSpeed = downSpeed * 2
+                        upSpeed = upSpeed * 2
+                    }
+                }
 
                 val ping:Ping = Ping.ping(URL("http://www.google.com:443/"), mContext)
                 val jitter:Int = mBeforePingCnt - ping.cnt
